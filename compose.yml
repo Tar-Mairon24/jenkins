@@ -22,18 +22,10 @@ services:
     depends_on:
       - jenkins
     environment:
-      JENKINS_URL: "http://172.18.0.2:8080/"
+      JENKINS_URL: "{$jenkins_url}"
       JENKINS_AGENT_NAME: "Agent"
-      JENKINS_SECRET: "c4f9302b84b77d4d2fec207be69c4c39c76e1fef0f6b4c40aeecb757fe13f3c1"
+      JENKINS_SECRET: ""
       WEBSOCKET: true
-    # command: >
-    #     sh -c "cd /var/jenkins_home && \
-    #     curl -sO http://localhost:8080/jnlpJars/agent.jar && \
-    #     java -jar agent.jar \
-    #     -url http://172.21.0.2:8080/ \
-    #     -secret 5888402fb8ffc802adfa602cf0e266a5a658365175ce8785e37c0922229f9b17 \
-    #     -name nodo_jenkins \
-    #     -workDir /var/jenkins_home"
     networks:
       - jenkins
       
