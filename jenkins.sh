@@ -1,12 +1,13 @@
 #! /bin/bash
 
-source ~/Documents/jenkins/.env
+source .env
 
 start_agent() {
     echo "Starting Jenkins agent..."
     docker exec -w /var/jenkins_home jenkins-agent curl -sO "$jenkins_curl"
-    docker exec -w /var/jenkins_home jenkins-agent java -jar agent.jar \
-        -url "$jenkins_url" -secret "$jenkins_secret" -name Agent -webSocket -workDir "/var/jenkins_home"
+    docker exec -dw /var/jenkins_home jenkins-agent java -jar agent.jar \
+            -url "$jenkins_url" -secret "$jenkins_secret" \
+            -name Agent -webSocket -workDir "/var/jenkins_home"
     if [ $? -ne 0 ]; then
         echo "Failed to start Jenkins agent"
         exit 1
@@ -26,6 +27,11 @@ restart_jenkins() {
     echo "Jenkins started successfully"
     sleep 5
 }
+
+if ! docker info > /dev/null 2>&1; then
+    echo "Docker is not running. Please start Docker and try again."
+    exit 1
+fi
 
 jenkins_count=$(docker ps | grep -c jenkins)
 if [ "$jenkins_count" -ne 2 ]; then
