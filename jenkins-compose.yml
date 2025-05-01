@@ -1,0 +1,46 @@
+services:
+
+  jenkins:
+    container_name: jenkins
+    networks:
+      - jenkins   
+    image: jenkins/jenkins:2.492.2-jdk17
+    ports:
+      - 8080:8080
+      - 50000:50000
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-cert:/certs/client:ro
+
+  jenkins-agent:
+    image: jenkins/jenkins:2.492.2-jdk17
+    container_name: jenkins-agent
+    depends_on:
+      - jenkins
+    environment:
+      JENKINS_URL: "http://172.18.0.2:8080/"
+      JENKINS_AGENT_NAME: "Agent"
+      JENKINS_SECRET: "c4f9302b84b77d4d2fec207be69c4c39c76e1fef0f6b4c40aeecb757fe13f3c1"
+      WEBSOCKET: true
+    # command: >
+    #     sh -c "cd /var/jenkins_home && \
+    #     curl -sO http://localhost:8080/jnlpJars/agent.jar && \
+    #     java -jar agent.jar \
+    #     -url http://172.21.0.2:8080/ \
+    #     -secret 5888402fb8ffc802adfa602cf0e266a5a658365175ce8785e37c0922229f9b17 \
+    #     -name nodo_jenkins \
+    #     -workDir /var/jenkins_home"
+    networks:
+      - jenkins
+      
+volumes: 
+  jenkins-data:
+  jenkins-cert:
+
+networks:
+  jenkins:
+    driver: bridge
