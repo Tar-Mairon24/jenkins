@@ -4,10 +4,10 @@ source .env
 
 start_agent() {
     echo "Starting Jenkins agent..."
-    docker exec -w /var/jenkins_home jenkins-agent curl -sO "$jenkins_curl"
-    docker exec -dw /var/jenkins_home jenkins-agent java -jar agent.jar \
+    docker exec -w "$jenkins_path" jenkins-agent curl -sO "$jenkins_curl"
+    docker exec -dw "$jenkins_path" jenkins-agent java -jar agent.jar \
             -url "$jenkins_url" -secret "$jenkins_secret" \
-            -name Agent -webSocket -workDir "/var/jenkins_home"
+            -name "$jenkins_name" -webSocket -workDir "$jenkins_path"
     if [ $? -ne 0 ]; then
         echo "Failed to start Jenkins agent"
         exit 1

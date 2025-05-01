@@ -4,7 +4,7 @@ services:
     container_name: jenkins
     networks:
       - jenkins   
-    image: jenkins/jenkins:2.492.2-jdk17
+    image: jenkins/jenkins:2.504.1-lts-jdk21
     ports:
       - 8080:8080
       - 50000:50000
@@ -13,17 +13,17 @@ services:
       DOCKER_CERT_PATH: /certs/client
       DOCKER_TLS_VERIFY: 1
     volumes:
-      - jenkins-data:/var/jenkins_home
+      - jenkins-data:$jenkins_path
       - jenkins-cert:/certs/client:ro
 
   jenkins-agent:
-    image: jenkins/jenkins:2.492.2-jdk17
+    image: jenkins/jenkins:2.504.1-lts-jdk21
     container_name: jenkins-agent
     depends_on:
       - jenkins
     environment:
       JENKINS_URL: "{$jenkins_url}"
-      JENKINS_AGENT_NAME: "Agent"
+      JENKINS_AGENT_NAME: "{$jenkins_name}"
       JENKINS_SECRET: ""
       WEBSOCKET: true
     networks:
