@@ -17,9 +17,7 @@ services:
       - jenkins-cert:/certs/client:ro
 
   jenkins-agent:
-    build:
-      context: .
-      dockerfile: Dockerfile.node
+    image: jenkins/jnlp-agent-node
     container_name: jenkins-agent
     depends_on:
       - jenkins
