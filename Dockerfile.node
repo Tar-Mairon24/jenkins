@@ -1,5 +1,5 @@
 # Use official Jenkins agent base image
-FROM jenkins/inbound-agent:jdk21
+FROM jenkins/inbound-agent
 
 USER root
 
