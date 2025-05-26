@@ -27,7 +27,7 @@ Fill the .env and then do the next
 Build the agent
 
 ```bash
-docker compose build --build-arg DOCKER_GID=<DOCKER_GID> jenkins-agent
+docker compose build --build-arg DOCKER_GID=$DOCKER_GID jenkins-agent
 ```
 
 ### 4. Start the Jenkins Environment again
