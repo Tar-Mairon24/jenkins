@@ -25,6 +25,15 @@ RUN DOCKER_COMPOSE_VERSION="v2.36.1" && \
     curl -SL https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose && \
     chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
+# Install Ansible
+RUN apt-get update && \
+    apt-get install -y ansible && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+    apt-get install -y rsync && \
+    rm -rf /var/lib/apt/lists/*
+
 ARG DOCKER_GID
 
 # Add docker group with host's group ID and add jenkins user to it
