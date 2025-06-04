@@ -32,7 +32,7 @@ services:
       - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/ansible/hosts:/etc/ansible/hosts
-      - /home/${user}/.ssh:/home/jenkins/.ssh:ro
+      - /home/$user/.ssh:/home/jenkins/.ssh:ro
     networks:
       - jenkins
       
