@@ -13,6 +13,7 @@ services:
     volumes:
       - jenkins-data:$jenkins_path
       - jenkins-cert:/certs/client:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - jenkins 
 
@@ -26,6 +27,9 @@ services:
       JENKINS_AGENT_NAME: "$jenkins_name"
       JENKINS_SECRET: "$jenkins_secret"
       WEBSOCKET: true
+    volumes:
+      - jenkins-data:$jenkins_path
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - jenkins
       
